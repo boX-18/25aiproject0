@@ -1,8 +1,5 @@
 import streamlit as st
 import random
-import requests
-from PIL import Image
-from io import BytesIO
 
 # MBTI 유형에 따른 직업 추천 데이터
 mbti_to_jobs = {
@@ -29,29 +26,30 @@ def random_emoji():
     emojis = ["🎉", "🎈", "🎊", "🌟", "💥", "🥳", "✨"]
     return random.choice(emojis)
 
-# 윈도우 풍경 이미지 URL 리스트 (인터넷에서 사용 가능한 이미지 URL)
-background_images_urls = [
-    "https://images.unsplash.com/photo-1506748686211-0d38b4202823",  # 예시: Windows-like background
-    "https://images.unsplash.com/photo-1506748686211-0d38b4202823",  # 예시 이미지 링크 (윈도우 배경 풍경 느낌)
-    "https://images.unsplash.com/photo-1472053238851-d01f4fe8db34",  # 예시: 또 다른 배경
-]
-
-# 랜덤 이미지 선택
-def get_random_background_image():
-    return random.choice(background_images_urls)
-
-# 배경 이미지 로딩
-background_image_url = get_random_background_image()
-response = requests.get(background_image_url)
-img = Image.open(BytesIO(response.content))
+# 직업 추천 및 정보 링크
+def get_wikipedia_url(job):
+    job_to_wiki = {
+        '과학자 🍳': 'https://ko.wikipedia.org/wiki/%EA%B3%BC%ED%95%99%EC%9E%90',
+        '의사 🏥': 'https://ko.wikipedia.org/wiki/%EC%9D%98%EC%82%AC',
+        '엔지니어 ⚙️': 'https://ko.wikipedia.org/wiki/%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4',
+        '법률 전문가 ⚖️': 'https://ko.wikipedia.org/wiki/%EB%B2%95%EB%A5%A0',
+        '프로그램 개발자 💻': 'https://ko.wikipedia.org/wiki/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8_%EA%B0%9C%EB%B0%9C%EC%9E%90',
+        '연구원 🔬': 'https://ko.wikipedia.org/wiki/%EC%97%B0%EA%B5%AC%EC%9B%90',
+        '작가 ✍️': 'https://ko.wikipedia.org/wiki/%EC%9E%91%EA%B0%80',
+        '기업가 💼': 'https://ko.wikipedia.org/wiki/%EA%B8%B0%EC%97%85%EA%B0%80',
+        '경영자 🏢': 'https://ko.wikipedia.org/wiki/%EA%B2%BD%EC%98%81%EC%9E%90',
+        '변호사 👩‍⚖️': 'https://ko.wikipedia.org/wiki/%EB%B3%80%ED%98%B8%EC%82%AC',
+        '정치인 🗳️': 'https://ko.wikipedia.org/wiki/%EC%A0%95%EC%B9%98%EC%9D%B8',
+        # 추가적인 직업들은 위와 같이 링크 추가 가능
+    }
+    return job_to_wiki.get(job, '#')
 
 # 메인 화면 구성
 st.title(f'MBTI 직업 추천 앱 {random_emoji()}')
 
-st.image(img, use_column_width=True, caption="윈도우 풍경 배경")
-
 st.write("""
-이 앱은 **MBTI** 유형을 입력하면, 그에 맞는 직업을 추천해줍니다!  
+🎈🎊 축하합니다! 🎉🎈  
+당신의 MBTI에 맞는 멋진 직업을 찾았어요! 🎉🎊  
 아래에서 자신의 MBTI를 선택하고, **재미있는 직업 추천**을 받아보세요! 
 """)
 
@@ -66,17 +64,34 @@ mbti = st.selectbox('당신의 MBTI 유형을 선택하세요:', [
 if mbti:
     st.subheader(f'{mbti}와 잘 어울리는 직업 {random_emoji()}:')
     for job in mbti_to_jobs[mbti]:
-        st.write(f'- {job} {random_emoji()}')
+        job_url = get_wikipedia_url(job)
+        st.write(f'- {job} {random_emoji()} [위키피디아]({job_url})')
+
+# 화면 구석에 색이 바뀌는 동그라미 이모지 (실시간으로 업데이트되게)
+st.markdown("""
+    <style>
+        @keyframes colorChange {
+            0% {background-color: red;}
+            25% {background-color: blue;}
+            50% {background-color: green;}
+            75% {background-color: yellow;}
+            100% {background-color: pink;}
+        }
+        .circle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            animation: colorChange 4s infinite;
+        }
+    </style>
+    <div class="circle"></div>
+""", unsafe_allow_html=True)
 
 # 풍선과 폭죽 이모지
 st.write("""
 🎈🎊 축하합니다! 🎉🎈  
 당신의 MBTI에 맞는 멋진 직업을 찾았어요! 🎉🎊  
 """)
-
-# 실행 방법 안내
-st.write("""
-즐거운 직업 추천을 받아보세요! 🎈🎉
-""")
-
-
