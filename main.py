@@ -1,5 +1,8 @@
 import streamlit as st
 import random
+import requests
+from PIL import Image
+from io import BytesIO
 
 # MBTI 유형에 따른 직업 추천 데이터
 mbti_to_jobs = {
@@ -26,8 +29,26 @@ def random_emoji():
     emojis = ["🎉", "🎈", "🎊", "🌟", "💥", "🥳", "✨"]
     return random.choice(emojis)
 
+# 윈도우 풍경 이미지 URL 리스트 (인터넷에서 사용 가능한 이미지 URL)
+background_images_urls = [
+    "https://images.unsplash.com/photo-1506748686211-0d38b4202823",  # 예시: Windows-like background
+    "https://images.unsplash.com/photo-1506748686211-0d38b4202823",  # 예시 이미지 링크 (윈도우 배경 풍경 느낌)
+    "https://images.unsplash.com/photo-1472053238851-d01f4fe8db34",  # 예시: 또 다른 배경
+]
+
+# 랜덤 이미지 선택
+def get_random_background_image():
+    return random.choice(background_images_urls)
+
+# 배경 이미지 로딩
+background_image_url = get_random_background_image()
+response = requests.get(background_image_url)
+img = Image.open(BytesIO(response.content))
+
 # 메인 화면 구성
 st.title(f'MBTI 직업 추천 앱 {random_emoji()}')
+
+st.image(img, use_column_width=True, caption="윈도우 풍경 배경")
 
 st.write("""
 이 앱은 **MBTI** 유형을 입력하면, 그에 맞는 직업을 추천해줍니다!  
@@ -52,6 +73,10 @@ st.write("""
 🎈🎊 축하합니다! 🎉🎈  
 당신의 MBTI에 맞는 멋진 직업을 찾았어요! 🎉🎊  
 """)
+
+# 실행 방법 안내
 st.write("""
 즐거운 직업 추천을 받아보세요! 🎈🎉
 """)
+
+
