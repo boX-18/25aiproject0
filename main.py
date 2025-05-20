@@ -26,7 +26,7 @@ mbti_to_jobs = {
 # Streamlit 앱 구성
 st.title(f'MBTI 직업 추천 앱 {mint_choco_emoji * 3}')
 
-st.write(f"""
+st.write("""
 이 앱은 **MBTI** 유형을 입력하면, 그에 맞는 직업을 추천해줍니다.  
 아래에서 자신의 MBTI를 입력하고, **민트초코처럼 달콤한 직업 추천**을 받아보세요! {mint_choco_emoji}
 """)
@@ -45,5 +45,7 @@ if mbti:
         st.write(f'- {job} {mint_choco_emoji}')
         
 # 실행 방법 안내
-st.write(f"""
-앱을 실행하려면 터미널에서 아래 명령어를 사용해 주세요:  
+st.write("""
+앱을 실행하려면 터미널에서 아래 명령어를 사용해 주세요:  민트초코처럼 달콤한 직업 추천을 즐겨보세요! 🍫🍃
+""")
+
