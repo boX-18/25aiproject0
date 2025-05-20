@@ -180,7 +180,7 @@ def random_emoji():
     return random.choice(emojis)
 
 # Streamlit 앱 설정
-st.title(f"당신에게 맞는 직업과 하위 직업을 알아보세요! {random_emoji()}")
+st.title("당신에게 맞는 직업과 하위 직업을 알아보세요! {random_emoji()}")
 
 # MBTI 입력 받기
 mbti = st.selectbox("당신의 MBTI를 선택하세요:", ['INTJ', 'ENTP', 'ISFJ', 'ESTP', 'INFJ', 'ENFP', 'ISTJ', 'ESFP'])
@@ -204,16 +204,16 @@ elif mbti == 'ESFP':
     job = '배우 🎬'
 
 # 직업과 하위 직업 정보 출력
-st.subheader(f"{job}에 대해 알아보세요! {random_emoji()}")
+st.subheader("{job}에 대해 알아보세요! {random_emoji()}")
 st.write(job_to_subjobs[job]['description'])
 
 # 하위 직업 리스트
 st.subheader("하위 직업들:")
 for subjob in job_to_subjobs[job]['subjobs']:
-    st.write(f"- {subjob}")
+    st.write("- {subjob}")
 
 # 추가적으로 직업에 대한 링크 제공
-st.markdown(f"[자세한 직업 정보 읽기](https://ko.wikipedia.org/wiki/{job_to_wiki[job]})")
+st.markdown("[자세한 직업 정보 읽기](https://ko.wikipedia.org/wiki/{job_to_wiki[job]})")
 
 # 화면 구석에 색이 바뀌는 동그라미 이모지 표시
 st.markdown(
