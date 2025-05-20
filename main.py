@@ -72,111 +72,45 @@ st.write("""
 아래에서 자신의 MBTI를 선택하고, **재미있는 직업 추천**을 받아보세요! 
 """)
 
-import streamlit as st
-import random
+# 사용자로부터 MBTI 입력 받기
+mbti = st.selectbox('당신의 MBTI 유형을 선택하세요:', [
+    'INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 
+    'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 
+    'ISTP', 'ISFP', 'ESTP', 'ESFP'
+])
 
-# 직업과 하위 직업들에 대한 정보
-job_to_subjobs = {
-    '과학자 🍳': {
-        'description': '과학자는 새로운 발견을 위해 실험과 연구를 수행하는 전문가입니다.',
-        'subjobs': [
-            '물리학자 🔬: 자연의 법칙을 연구하는 과학자',
-            '화학자 🧪: 화학 반응과 물질을 연구하는 과학자',
-            '생물학자 🧬: 생명과학에 대한 연구를 수행하는 과학자',
-            '천문학자 🌌: 우주와 천체를 연구하는 과학자'
-        ],
-        'wiki': '과학자'
-    },
-    '의사 🏥': {
-        'description': '의사는 사람들의 건강을 돌보는 전문가입니다.',
-        'subjobs': [
-            '심장 전문의 ❤️: 심장 관련 질환을 진단하고 치료하는 의사',
-            '내과 의사 🩺: 다양한 내과 질환을 치료하는 의사',
-            '외과 의사 ⚒️: 수술을 통해 질환을 치료하는 의사',
-            '소아과 의사 👶: 어린이의 건강을 돌보는 의사'
-        ],
-        'wiki': '의사'
-    },
-    '엔지니어 ⚙️': {
-        'description': '엔지니어는 다양한 기술적 문제를 해결하는 전문가입니다.',
-        'subjobs': [
-            '기계 엔지니어 🔧: 기계 설계 및 제조와 관련된 문제를 해결하는 엔지니어',
-            '전기 엔지니어 ⚡: 전기 시스템 설계와 설치를 담당하는 엔지니어',
-            '소프트웨어 엔지니어 💻: 컴퓨터 프로그램을 설계하고 개발하는 엔지니어',
-            '토목 엔지니어 🏗️: 구조물 및 인프라 설계를 담당하는 엔지니어'
-        ],
-        'wiki': '엔지니어'
-    },
-    '변호사 👩‍⚖️': {
-        'description': '변호사는 법적 문제를 해결하고, 법원에서 클라이언트를 대리하는 전문가입니다.',
-        'subjobs': [
-            '형사 변호사 ⚖️: 형사 사건을 전문적으로 다루는 변호사',
-            '민사 변호사 📜: 민사 소송과 관련된 법적 절차를 처리하는 변호사',
-            '기업 변호사 💼: 기업과 관련된 법적 문제를 다루는 변호사',
-            '가족 변호사 👨‍👩‍👧‍👦: 가족 관련 법적 문제를 전문적으로 다루는 변호사'
-        ],
-        'wiki': '변호사'
-    },
-    '프로그램 개발자 💻': {
-        'description': '프로그램 개발자는 컴퓨터 프로그램을 설계하고 개발하는 전문가입니다.',
-        'subjobs': [
-            '프론트엔드 개발자 🌐: 웹 페이지의 사용자 인터페이스를 설계하는 개발자',
-            '백엔드 개발자 🖥️: 서버와 데이터베이스 관련 프로그램을 개발하는 개발자',
-            '풀스택 개발자 ⚙️: 프론트엔드와 백엔드를 모두 다루는 개발자',
-            '모바일 앱 개발자 📱: 스마트폰 및 태블릿용 앱을 개발하는 개발자'
-        ],
-        'wiki': '소프트웨어_개발자'
-    },
-    '디자이너 🎨': {
-        'description': '디자이너는 시각적이고 기능적인 디자인을 창조하는 전문가입니다.',
-        'subjobs': [
-            '그래픽 디자이너 🖌️: 시각적 콘텐츠를 디자인하는 전문가',
-            'UX/UI 디자이너 🎮: 사용자 경험과 인터페이스를 설계하는 디자이너',
-            '산업 디자이너 🏭: 제품의 외형과 기능을 설계하는 디자이너',
-            '패션 디자이너 👗: 의류와 액세서리 디자인을 전문으로 하는 디자이너'
-        ],
-        'wiki': '디자이너'
-    }
-}
+# 추천 직업 출력
+if mbti:
+    st.subheader(f'{mbti}와 잘 어울리는 직업 {random_emoji()}:')
+    for job in mbti_to_jobs[mbti]:
+        job_url = get_wikipedia_url(job)
+        st.write(f'- {job} {random_emoji()} [위키피디아]({job_url})')
 
-# 랜덤 이모지 생성 함수
-def random_emoji():
-    emojis = ['🎉', '✨', '💫', '🎈', '🎊']
-    return random.choice(emojis)
+# 화면 구석에 색이 바뀌는 동그라미 이모지 (실시간으로 업데이트되게)
+st.markdown("""
+    <style>
+        @keyframes colorChange {
+            0% {background-color: red;}
+            25% {background-color: blue;}
+            50% {background-color: green;}
+            75% {background-color: yellow;}
+            100% {background-color: pink;}
+        }
+        .circle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            animation: colorChange 4s infinite;
+        }
+    </style>
+    <div class="circle"></div>
+""", unsafe_allow_html=True)
 
-# Streamlit 앱 설정
-st.title(f"당신에게 맞는 직업과 하위 직업을 알아보세요! {random_emoji()}")
-
-# MBTI 입력 받기
-mbti = st.selectbox("당신의 MBTI를 선택하세요:", ['INTJ', 'ENTP', 'ISFJ', 'ESTP', 'INFJ', 'ENFP', 'ISTJ', 'ESFP'])
-
-# 직업 추천 및 하위 직업 출력
-if mbti == 'INTJ':
-    job = '과학자 🍳'
-elif mbti == 'ENTP':
-    job = '변호사 👩‍⚖️'
-elif mbti == 'ISFJ':
-    job = '교사 🏫'
-elif mbti == 'ESTP':
-    job = '경찰 🚔'
-elif mbti == 'INFJ':
-    job = '작가 ✍️'
-elif mbti == 'ENFP':
-    job = '디자이너 🎨'
-elif mbti == 'ISTJ':
-    job = '엔지니어 ⚙️'
-elif mbti == 'ESFP':
-    job = '배우 🎬'
-
-# 직업과 하위 직업 정보 출력
-st.subheader(f"{job}에 대해 알아보세요! {random_emoji()}")
-st.write(job_to_subjobs[job]['description'])
-
-# 하위 직업 리스트
-st.subheader("하위 직업들:")
-for subjob in job_to_subjobs[job]['subjobs']:
-    st.write(f"- {subjob}")
-
-# 추가적으로 직업에 대한 링크 제공
-wiki_url = f"https://ko.wikipedia.org/wiki/{job_to_subjobs[job]['wiki']}"
-st.markdown(f"[자세한 직업 정보 읽기]({wiki_url})")
+# 풍선과 폭죽 이모지
+st.write("""
+🎈🎊 축하합니다! 🎉🎈  
+당신의 MBTI에 맞는 멋진 직업을 찾았어요! 🎉🎊  
+""")
