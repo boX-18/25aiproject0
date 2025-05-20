@@ -1,5 +1,3 @@
-pip install streamlit
-pip install streamlit-lottie
 
 import streamlit as st
 import random
