@@ -1,44 +1,63 @@
 import streamlit as st
 import random
+import time
 
-# 직업 추천 리스트 (MBTI 타입에 따라 직업 추천)
-job_recommendations = {
-    'INTJ': [("과학자 🧑‍🔬", "https://www.bls.gov/ooh/life-physical-and-social-science/")],
-    'INTP': [("연구원 🔬", "https://www.bls.gov/ooh/life-physical-and-social-science/")],
-    'ENTJ': [("경영자 👔", "https://www.bls.gov/ooh/management/")],
-    'ENTP': [("발명가 💡", "https://www.bls.gov/ooh/architecture-and-engineering/")],
-    'INFJ': [("심리학자 🧠", "https://www.bls.gov/ooh/life-physical-and-social-science/")],
-    'INFP': [("작가 ✍️", "https://www.bls.gov/ooh/media-and-communication/writers-and-authors.htm")],
-    'ENFJ': [("교사 🍎", "https://www.bls.gov/ooh/education-training-and-library/high-school-teachers.htm")],
-    'ENFP': [("사회 활동가 🌍", "https://www.bls.gov/ooh/community-and-social-service/social-and-human-service-assistants.htm")],
-    'ISTJ': [("회계사 💼", "https://www.bls.gov/ooh/business-and-financial/accountants-and-auditors.htm")],
-    'ISFJ': [("간호사 🩺", "https://www.bls.gov/ooh/healthcare/registered-nurses.htm")],
-    'ESTJ': [("경영 관리자 🏢", "https://www.bls.gov/ooh/management/")],
-    'ESFJ': [("사회 복지사 💖", "https://www.bls.gov/ooh/community-and-social-service/social-workers.htm")],
-    'ISTP': [("기계공 🛠️", "https://www.bls.gov/ooh/installation-maintenance-and-repair/diesel-mechanics.htm")],
-    'ISFP': [("디자이너 🎨", "https://www.bls.gov/ooh/arts-and-design/fashion-designers.htm")],
-    'ESTP': [("세일즈 전문가 💼", "https://www.bls.gov/ooh/sales/sales-managers.htm")],
-    'ESFP': [("연예인 🎤", "https://www.bls.gov/ooh/entertainment-and-sports/actors.htm")],
+# MBTI별 직업 추천 데이터
+mbti_jobs = {
+    "INTJ": "전략 컨설턴트, 데이터 분석가, 연구원",
+    "INTP": "소프트웨어 개발자, 데이터 과학자, 발명가",
+    "ENTJ": "CEO, 기업 전략가, 사업 개발 관리자",
+    "ENTP": "창업자, 광고 전략가, 변호사",
+    "INFJ": "심리학자, 사회 사업가, 교사",
+    "INFP": "작가, 예술가, 상담사",
+    "ENFJ": "팀 리더, 교육자, 마케팅 전문가",
+    "ENFP": "작가, 배우, 인간 관계 전문가",
+    "ISTJ": "법률 전문가, 경영 컨설턴트, 회계사",
+    "ISFJ": "간호사, 사회 복지사, 교육자",
+    "ESTJ": "관리자, 법률 사무직, 프로젝트 관리자",
+    "ESFJ": "교사, 건강 관리 전문가, 마케팅 전문가",
+    "ISTP": "기술자, 조종사, 엔지니어",
+    "ISFP": "디자이너, 예술가, 사진작가",
+    "ESTP": "기업가, 마케팅 전문가, 이벤트 플래너",
+    "ESFP": "연예인, 이벤트 기획자, 사회 활동가"
 }
 
-# 랜덤 이모지 생성 함수
-def get_random_emoji():
-    emojis = ['🎉', '🎈', '🌟', '🌈', '💫']
-    return random.choice(emojis)
+# 네온 색상 리스트 (256색)
+neon_colors = [
+    "#FF073A", "#FF3399", "#FF66FF", "#FF00FF", "#FF6666", "#FF33CC", "#FF00CC", 
+    "#FF0066", "#FF6600", "#FF9900", "#FFCC00", "#FFCC66", "#FF6666", "#00FF00",
+    "#00FF66", "#00FF99", "#00FFFF", "#0099FF", "#0066FF", "#0000FF", "#6600FF",
+    "#9900FF", "#CC00FF", "#FF00FF", "#FF3399"
+]
 
-# 메인 화면 설정
-st.title(f"{get_random_emoji()} MBTI 직업 추천 웹앱 {get_random_emoji()}")
+# 스트림릿 UI 설정
+st.title("🎆 MBTI 직업 추천 웹앱 🎈")
 
 # MBTI 입력 받기
-mbti = st.selectbox("당신의 MBTI 유형을 선택하세요", list(job_recommendations.keys()))
+mbti = st.selectbox("당신의 MBTI는 무엇인가요?", ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", 
+                                                "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", 
+                                                "ISTP", "ISFP", "ESTP", "ESFP"])
 
-# 추천 직업 보여주기
-st.subheader(f"{mbti}에 어울리는 직업은...?")
+# 직업 추천
+if mbti in mbti_jobs:
+    st.subheader(f"추천 직업 for {mbti} 🎆🎈:")
+    st.write(mbti_jobs[mbti])
 
-if mbti in job_recommendations:
-    for job, link in job_recommendations[mbti]:
-        st.write(f"- {job} [자세히 보기]({link})")
+# 네온 색상 변경 함수
+def change_color():
+    while True:
+        # 랜덤 색상 선택
+        bg_color = random.choice(neon_colors)
+        text_color = random.choice(neon_colors)
 
-# 메인 화면에 풍선과 폭죽 이모지 추가
-st.markdown("🎉🎈🎉🎈🎉 폭죽과 풍선이 당신을 기다립니다! 🎉🎈🎉🎈🎉")
+        # 배경색과 글자색 변경
+        st.markdown(
+            f"<style>body {{background-color: {bg_color}; color: {text_color};}}</style>", 
+            unsafe_allow_html=True
+        )
+        
+        time.sleep(0.5)  # 0.5초마다 색상 변경
 
+# 스트림릿에서 실행되는 부분
+if __name__ == "__main__":
+    change_color()  # 0.5초마다 색상 변경
