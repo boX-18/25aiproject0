@@ -29,19 +29,38 @@ def random_emoji():
 # 직업 추천 및 정보 링크
 def get_wikipedia_url(job):
     job_to_wiki = {
-        '과학자 🍳': 'https://ko.wikipedia.org/wiki/%EA%B3%BC%ED%95%99%EC%9E%90',
-        '의사 🏥': 'https://ko.wikipedia.org/wiki/%EC%9D%98%EC%82%AC',
-        '엔지니어 ⚙️': 'https://ko.wikipedia.org/wiki/%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4',
-        '법률 전문가 ⚖️': 'https://ko.wikipedia.org/wiki/%EB%B2%95%EB%A5%A0',
-        '프로그램 개발자 💻': 'https://ko.wikipedia.org/wiki/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8_%EA%B0%9C%EB%B0%9C%EC%9E%90',
-        '연구원 🔬': 'https://ko.wikipedia.org/wiki/%EC%97%B0%EA%B5%AC%EC%9B%90',
-        '작가 ✍️': 'https://ko.wikipedia.org/wiki/%EC%9E%91%EA%B0%80',
-        '기업가 💼': 'https://ko.wikipedia.org/wiki/%EA%B8%B0%EC%97%85%EA%B0%80',
-        '경영자 🏢': 'https://ko.wikipedia.org/wiki/%EA%B2%BD%EC%98%81%EC%9E%90',
-        '변호사 👩‍⚖️': 'https://ko.wikipedia.org/wiki/%EB%B3%80%ED%98%B8%EC%82%AC',
-        '정치인 🗳️': 'https://ko.wikipedia.org/wiki/%EC%A0%95%EC%B9%98%EC%9D%B8',
-        # 추가적인 직업들은 위와 같이 링크 추가 가능
-    }
+    '과학자 🍳': 'https://ko.wikipedia.org/wiki/%EA%B3%BC%ED%95%99%EC%9E%90',
+    '의사 🏥': 'https://ko.wikipedia.org/wiki/%EC%9D%98%EC%82%AC',
+    '엔지니어 ⚙️': 'https://ko.wikipedia.org/wiki/%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4',
+    '법률 전문가 ⚖️': 'https://ko.wikipedia.org/wiki/%EB%B2%95%EB%A5%A0',
+    '프로그램 개발자 💻': 'https://ko.wikipedia.org/wiki/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8_%EA%B0%9C%EB%B0%9C%EC%9E%90',
+    '연구원 🔬': 'https://ko.wikipedia.org/wiki/%EC%97%B0%EA%B5%AC%EC%9B%90',
+    '작가 ✍️': 'https://ko.wikipedia.org/wiki/%EC%9E%91%EA%B0%80',
+    '기업가 💼': 'https://ko.wikipedia.org/wiki/%EA%B8%B0%EC%97%85%EA%B0%80',
+    '경영자 🏢': 'https://ko.wikipedia.org/wiki/%EA%B2%BD%EC%98%81%EC%9E%90',
+    '변호사 👩‍⚖️': 'https://ko.wikipedia.org/wiki/%EB%B3%80%ED%98%B8%EC%82%AC',
+    '정치인 🗳️': 'https://ko.wikipedia.org/wiki/%EC%A0%95%EC%B9%98%EC%9D%B8',
+    '마케팅 전문가 📈': 'https://ko.wikipedia.org/wiki/%EB%A7%88%EC%BC%80%ED%8C%85_%EC%A0%84%EB%AC%B8%EA%B3%BC',
+    '작곡가 🎼': 'https://ko.wikipedia.org/wiki/%EC%9E%91%EC%BD%95%EA%B0%80',
+    '배우 🎬': 'https://ko.wikipedia.org/wiki/%EB%B0%B0%EC%9A%B0',
+    '디자이너 🎨': 'https://ko.wikipedia.org/wiki/%EB%94%94%EC%9E%90%EC%9D%B8',
+    '간호사 💉': 'https://ko.wikipedia.org/wiki/%EA%B0%84%ED%98%B8%EC%82%AC',
+    '교사 🏫': 'https://ko.wikipedia.org/wiki/%EA%B5%90%EC%82%AC',
+    '사회복지사 👫': 'https://ko.wikipedia.org/wiki/%EC%82%AC%ED%9A%8C%EB%B3%B5%EC%A7%80%EC%82%AC',
+    '군인 🎖️': 'https://ko.wikipedia.org/wiki/%EA%B5%B0%EC%9D%B8',
+    '회계사 📊': 'https://ko.wikipedia.org/wiki/%ED%9A%8C%EA%B3%84%EC%82%AC',
+    '경찰 🚔': 'https://ko.wikipedia.org/wiki/%EA%B2%BD%EC%B0%B0',
+    '파일럿 ✈️': 'https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%BC%EB%9F%9B',
+    '사회복지사 👩‍❤️‍👩': 'https://ko.wikipedia.org/wiki/%EC%82%AC%ED%9A%8C%EB%B3%B5%EC%A7%80%EC%82%AC',
+    '운동선수 🏅': 'https://ko.wikipedia.org/wiki/%EC%9A%B4%EB%8F%99%EC%84%A0%EC%88%98',
+    '파일럿 🛩️': 'https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%BC%EB%9F%9B',
+    '프로젝트 매니저 📅': 'https://ko.wikipedia.org/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%A7%A4%EB%8B%88%EC%A0%80',
+    '판매원 🛒': 'https://ko.wikipedia.org/wiki/%ED%8C%90%EB%A7%A4%EC%9B%90',
+    '작곡가 🎼': 'https://ko.wikipedia.org/wiki/%EC%9E%91%EC%BD%95%EA%B0%80',
+    '정원사 🌻': 'https://ko.wikipedia.org/wiki/%EC%A0%95%EC%9B%90%EC%82%AC',
+    '디자이너 🎨': 'https://ko.wikipedia.org/wiki/%EB%94%94%EC%9E%90%EC%9D%B8',
+}
+
     return job_to_wiki.get(job, '#')
 
 # 메인 화면 구성
