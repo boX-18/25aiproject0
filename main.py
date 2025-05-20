@@ -1,8 +1,5 @@
-
 import streamlit as st
 import random
-from streamlit_lottie import st_lottie
-import requests
 
 # MBTI 유형에 따른 직업 추천 데이터
 mbti_to_jobs = {
@@ -24,17 +21,10 @@ mbti_to_jobs = {
     'ESFP': ['배우 🎬', '디자이너 👗', '판매원 🛒', '엔터테이너 🎤']
 }
 
-# 랜덤 이모지 생성
+# 랜덤 이모지 생성 함수
 def random_emoji():
     emojis = ["🎉", "🎈", "🎊", "🌟", "💥", "🥳", "✨"]
     return random.choice(emojis)
-
-# Lottie 애니메이션 로딩 함수
-def load_lottie_url(url:str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
 
 # 메인 화면 구성
 st.title(f'MBTI 직업 추천 앱 {random_emoji()}')
@@ -57,13 +47,11 @@ if mbti:
     for job in mbti_to_jobs[mbti]:
         st.write(f'- {job} {random_emoji()}')
 
-# Lottie 애니메이션 효과 (풍선과 폭죽)
-lottie_url = "https://assets9.lottiefiles.com/packages/lf20_s3y8vhf8.json"  # Lottie 애니메이션 URL
-st_lottie(load_lottie_url(lottie_url), speed=1, width="100%", height="500px", key="balloons")
-
-# 실행 방법 안내
+# 풍선과 폭죽 이모지
 st.write("""
-앱을 실행하려면 터미널에서 아래 명령어를 사용해 주세요:  
-streamlit run mbti_job_with_effects.py
+🎈🎊 축하합니다! 🎉🎈  
+당신의 MBTI에 맞는 멋진 직업을 찾았어요! 🎉🎊  
+""")
+st.write("""
 즐거운 직업 추천을 받아보세요! 🎈🎉
 """)
